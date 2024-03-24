@@ -90,10 +90,6 @@ function App() {
 
 	return (
 		<div className="App">
-			{/* <span>
-				Cost:- <input type="number" id="amount" name="amount" /> Rupees
-				<button id="pay-button">Pay Now</button>
-			</span> */}
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>Buy React now!</p>
