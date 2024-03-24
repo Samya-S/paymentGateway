@@ -1,8 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
+import { useState } from 'react'
 
 function App() {
+	const [cost, setCost] = useState('500')
+
 	function loadScript(src) {
 		return new Promise((resolve) => {
 			const script = document.createElement("script");
@@ -25,46 +28,30 @@ function App() {
 			return;
 		}
 
-		/********************/
-		const hostingDomain = 'http://localhost:5000'
-		// const amountVal = 50000
-		/********************/
+		const hostingDomain = process.env.REACT_APP_BACKEND_HOSTING_DOMAIN
+		const amountVal = (cost * 100)
 
-		// creating a new order
-		// const result = await axios.post("http://localhost:5000/payment/orders");
+		// Creating a new order
 		const result = await axios.post(`${hostingDomain}/api/order/createOrder`,
 			{
-				"amount": "96000",
+				"amount": amountVal,
 				"currency": "INR"
 			}
 		)
-		// const result = await fetch(`http://localhost:5000/api/order/createOrder`, {
-		// 	method: 'POST', // or 'PUT'
-		// 	headers: {
-		// 		"Content-Type": "application/json"
-		// 	},
-		// 	body: JSON.stringify({
-		// 		amount: '50000',
-		// 		currency: "INR"
-		// 	})
-		// });
-
-		// const resp = await result.json()
-		console.log(result.data)
 
 		if (!result) {
 			alert("Server error. Are you online?");
 			return;
 		}
 
-		// // Getting the order details back
+		// Getting the order details back
 		const { amount, id: order_id, currency } = result.data;
 
 		const options = {
-			key: "rzp_test_9ECvrYnzj2MSB5", // Enter the Key ID generated from the Dashboard
+			key: process.env.REACT_APP_KEY_ID,
 			amount: amount.toString(),
 			currency: currency,
-			name: "Soumya Corp.",
+			name: "SS corp.",
 			description: "Test Transaction",
 			image: { logo },
 			order_id: order_id,
@@ -76,25 +63,16 @@ function App() {
 					razorpay_signature: response.razorpay_signature,
 				};
 
-				// const result = await axios.post("http://localhost:5000/payment/success", data);
-				const result = await fetch(`${hostingDomain}/api/order/verifyOrder`, {
-					method: 'POST', // or 'PUT'
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(data)
-				});
-				const resp = await result.json()
-				console.log(resp)
-				alert(resp.message);
+				const result = await axios.post(`${hostingDomain}/api/order/verifyOrder`, data)
+				alert(result.data.message);
 			},
 			prefill: {
-				name: "Soumya Dey",
-				email: "SoumyaDey@example.com",
+				name: "XXXXX XXXX",
+				email: "xxxxxxx@xxx.xx",
 				contact: "9999999999",
 			},
 			notes: {
-				address: "Soumya Dey Corporate Office",
+				address: "Xxxx xxxx xxxxx xxx xxxx",
 			},
 			theme: {
 				color: "#61dafb",
@@ -119,8 +97,9 @@ function App() {
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				<p>Buy React now!</p>
+				<span>Cost:- <input type="number" id="amount" name="amount" value={cost} onChange={(e) => setCost(e.target.value)} /> Rupees</span><br />
 				<button className="App-link" onClick={displayRazorpay}>
-					Pay ₹500
+					Pay ₹{cost}
 				</button>
 			</header>
 		</div>

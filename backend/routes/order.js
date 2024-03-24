@@ -64,10 +64,11 @@ router.post('/verifyOrder', (req, res) => {
         const generated_signature = hmac.digest('hex');
 
         if (razorpay_signature === generated_signature) {
-            res.json({ success: true, message: "Payment has been verified", generated_signature, razorpay_signature })
+            res.json({ success: true, message: "Payment has been verified" })
         }
-        else
-            res.json({ success: false, message: "Payment verification failed", generated_signature, razorpay_signature })
+        else {
+            res.json({ success: false, message: "Payment verification failed" })
+        }
     }
     catch (error) {
         console.log(error);
