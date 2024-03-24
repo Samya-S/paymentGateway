@@ -92,7 +92,7 @@ function App() {
 		<div className="App">
 			<header className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
-				<p>Buy React now!</p>
+				<p>Buy now!</p>
 				<span>Cost:- <input type="number" id="amount" name="amount" value={cost} onChange={(e) => setCost(e.target.value)} /> Rupees</span><br />
 				<button className="App-link" onClick={displayRazorpay}>
 					Pay ₹{cost}

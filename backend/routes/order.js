@@ -7,6 +7,7 @@ const crypto = require('crypto')
 const key_id = process.env.key_id
 const key_secret = process.env.key_secret
 
+
 // ROUTE 1: creating an order using: POST "/api/order/createOrder"
 router.post('/createOrder', async (req, res) => {
     try {
@@ -46,13 +47,14 @@ router.post('/createOrder', async (req, res) => {
 // ROUTE 2: verifying an order using: POST "/api/order/verifyOrder"
 router.post('/verifyOrder', (req, res) => {
     try {
-        // STEP 7: Receive Payment Data 
+        /* Receive Payment Data */
         const { order_id, payment_id, razorpay_signature } = req.body;
         // const razorpay_signature = req.headers['x-razorpay-signature'];
 
         const keySecret = key_secret;
 
-        // STEP 8: Verification & Send Response to User 
+
+        /* Verification & Send Response to User */
 
         // Creating hmac object 
         let hmac = crypto.createHmac('sha256', keySecret);
@@ -76,7 +78,7 @@ router.post('/verifyOrder', (req, res) => {
     }
 });
 
-// ROUTE 2: refund using: POST "/api/order/refund"
+// ROUTE 3: refund using: POST "/api/order/refund/:id"
 router.post('/refund/:id', async (req, res) => {
     try {
         const razorpayInstance = new Razorpay({
@@ -84,13 +86,14 @@ router.post('/refund/:id', async (req, res) => {
             key_secret: key_secret,
         });
 
-        //Verify the payment Id first, then access the Razorpay API. 
+        /* TODO: need to verify the payment Id first, then access the Razorpay API. */
+
         const options = {
             // payment_id: req.body.paymentId,
             amount: req.body.amount,
         };
 
-        const razorpayResponse = razorpayInstance.payments.refund(req.params.id, options);
+        const razorpayResponse = await razorpayInstance.payments.refund(req.params.id, options);
         res.json(razorpayResponse)
     }
     catch (error) {
