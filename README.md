@@ -25,11 +25,15 @@ Made with Razorpay integration and ReactJS as frontend
 
 3. Install dependencies:
 
-    ```bash
-    npm install
-    ```
-    or alternatively
+   In the frontend directory
    ```bash
+   cd frontend
+   npm i
+   ```
+   
+   In the backend directory
+   ```bash
+   cd backend
    npm i
    ```
    `Make sure to have nodejs and npm installed`
