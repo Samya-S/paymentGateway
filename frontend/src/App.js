@@ -44,6 +44,9 @@ function App() {
 			return;
 		}
 
+		// console.log('on createOrder:');
+		// console.log(result);
+
 		// Getting the order details back
 		const { amount, id: order_id, currency } = result.data;
 
@@ -62,8 +65,12 @@ function App() {
 					order_id: response.razorpay_order_id,
 					razorpay_signature: response.razorpay_signature,
 				};
+				// console.log('on payment:');
+				// console.log(data);
 
 				const result = await axios.post(`${hostingDomain}/api/order/verifyOrder`, data)
+				// console.log('on verifyOrder:');
+				// console.log(result);
 				alert(result.data.message);
 			},
 			prefill: {

@@ -102,4 +102,61 @@ router.post('/refund/:id', async (req, res) => {
     }
 })
 
+// ROUTE 4: getPaymentLink using: POST "/api/order/getPaymentLink"
+router.post('/getPaymentLink', async (req, res) => {
+    try {
+        const razorpayInstance = new Razorpay({
+            key_id: key_id,
+            key_secret: key_secret,
+        });
+
+        // fuction to generate unix timestamp which is 30 minutes past the current time
+        function getUnixTime() {
+            const date = new Date();
+            const unixTime = Math.floor(date.getTime() / 1000) + 1800;
+            return unixTime;
+        }
+
+        // function to generate random reference id which is unique every time
+        function generateReferenceId() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = ' ';
+            const charactersLength = characters.length;
+            for (let i = 0; i < 8; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        const order = {
+            amount: req.body.amount,
+            currency: req.body.currency,
+            accept_partial: false,
+            expire_by: getUnixTime(),   // 30 minutes past the current time
+            reference_id: generateReferenceId(),    // need to be unique every time
+            description: req.body.description,
+            customer: req.body.customer,
+            notify: {
+                sms: true,
+                email: true
+            },
+            reminder_enable: true,
+            options: {
+                checkout: {
+                    theme: {
+                        hide_topbar: true
+                    }
+                }
+            }
+        }
+
+        const razorpayResponse = await razorpayInstance.paymentLink.create(order);
+        res.json(razorpayResponse)
+    }
+    catch (error) {
+        console.log(error);
+        res.status(error.status).send(error.message);
+    }
+})
+
 module.exports = router;
