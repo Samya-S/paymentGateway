@@ -51,7 +51,7 @@ function App() {
 		const { amount, id: order_id, currency } = result.data;
 
 		const options = {
-			key: process.env.REACT_APP_KEY_ID,
+			key: process.env.REACT_APP_RZPAY_KEY_ID,
 			amount: amount.toString(),
 			currency: currency,
 			name: "SS corp.",
