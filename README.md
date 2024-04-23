@@ -45,8 +45,8 @@ Made with Razorpay integration and ReactJS as frontend
 1. In the backend directory:
 
     ```bash
-    key_id = '<your razorpay api key id>'
-    key_secret = '<your razorpay api key secret>'
+    RZPAY_KEY_ID = '<your razorpay api key id>'
+    RZPAY_KEY_SECRET = '<your razorpay api key secret>'
     ```
 
 ## Run dev environment

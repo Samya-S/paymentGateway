@@ -4,8 +4,8 @@ const Razorpay = require('razorpay')
 const crypto = require('crypto')
 
 
-const key_id = process.env.key_id
-const key_secret = process.env.key_secret
+const key_id = process.env.RZPAY_KEY_ID
+const key_secret = process.env.RZPAY_KEY_SECRET
 
 
 // ROUTE 1: creating an order using: POST "/api/order/createOrder"
