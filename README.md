@@ -43,7 +43,7 @@ Made with Razorpay integration and ReactJS as frontend
 1. In the frontend directory:
 
     ```bash
-    REACT_APP_KEY_ID = '<your razorpay api key id>'
+    REACT_APP_RZPAY_KEY_ID = '<your razorpay api key id>'
     REACT_APP_BACKEND_HOSTING_DOMAIN = '<your backend hosting domain>'
     ```
 1. In the backend directory:
