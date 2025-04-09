@@ -12,7 +12,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.1",
+    "express": "^4.21.2",
     "razorpay": "^0.0.0"
   },
   "devDependencies": {
